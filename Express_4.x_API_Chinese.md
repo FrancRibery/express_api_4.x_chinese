@@ -17,8 +17,9 @@ var app = express();
 `express.static`是Express中唯一的内建中间件。它以[server-static][1]模块为基础开发，负责托管 Express 应用内的静态资源。
 参数`root`为静态资源的所在的根目录。
 参数`options`是可选的，支持以下的属性：
+
 |属性|描述|类型|默认值|
-|:----:|:----:|:----:|:------:|
+|:----:|:----:|:----:|:----:|
 |dotfiles|是否响应点文件。供选择的值有"allow"，"deny"和"ignore"|String|"ignore"|
 |etag|使能或者关闭etag|Boolean|true|
 |extensions|设置文件延期回退|Boolean|true|
@@ -26,9 +27,9 @@ var app = express();
 |lastModified|设置文件在系统中的最后修改时间到`Last-Modified`头部。可能的取值有`false`和`true`。|Boolean|true|
 |maxAge|在Cache-Control头部中设置`max-age`属性，精度为毫秒(ms)或则一段[ms format][2]的字符串|Number|0|
 |redirect|当请求的pathname是一个目录的时候，重定向到尾随"/"|Boolean|true|
-|setHeaders|当响应静态文件请求时设置headers的方法|Funtion||
+|setHeaders|当响应静态文件请求时设置headers的方法|Funtion|&nbsp;|
 
-如果你想获得更多关于使用中间件的细节，你可以查阅[Serving static files in Express][3]。
+如果你想获得更多关于使用中间件的细节，你可以查阅[通过 Express 托管静态资源文件][3]。
 
 ##Application()
 `app`对象一般用来表示Express程序。通过调用Express模块导出的顶层的`express()`方法来创建它:
@@ -86,6 +87,7 @@ admin.get('/', function(req, res) {
 app.use('/admin', admin); // mount the sub app
 ```
 它和req对象的[baseUrl][11]属性比较相似，除了`req.baseUrl`是匹配的URL路径，而不是匹配的模式。如果一个子程序被挂载在多条路径模式，`app.mountpath`就是一个关于挂载路径模式项的列表，如下面例子所示。
+```
 ```js
 var admin = express();
 admin.get('/', function(req, res) {
