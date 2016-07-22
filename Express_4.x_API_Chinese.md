@@ -1,5 +1,5 @@
-﻿# Express 4.x API
-
+# Express 4.x API
+[updated by github@bajian](https://github.com/bajian/express_api_4.x_chinese)
 标签（空格分隔）： express 翻译 api文档 中文
 
 ---
@@ -14,7 +14,7 @@ var app = express();
 
 ###Methods
 ####express.static(root, [options])
-`express.static`是Express中唯一的内建中间件。它以[server-static][1]模块为基础开发，负责托管 Express 应用内的静态资源。
+`express.static`是Express中唯一的内建中间件。它以[server-static](https://github.com/expressjs/serve-static)模块为基础开发，负责托管 Express 应用内的静态资源。
 参数`root`为静态资源的所在的根目录。
 参数`options`是可选的，支持以下的属性：
 
@@ -25,11 +25,11 @@ var app = express();
 |extensions|设置文件延期回退|Boolean|true|
 |index|发送目录索引文件。设置false将不发送。|Mixed|"index.html"|
 |lastModified|设置文件在系统中的最后修改时间到`Last-Modified`头部。可能的取值有`false`和`true`。|Boolean|true|
-|maxAge|在Cache-Control头部中设置`max-age`属性，精度为毫秒(ms)或则一段[ms format][2]的字符串|Number|0|
+|maxAge|在Cache-Control头部中设置`max-age`属性，精度为毫秒(ms)或则一段[ms format](https://www.npmjs.org/package/ms)的字符串|Number|0|
 |redirect|当请求的pathname是一个目录的时候，重定向到尾随"/"|Boolean|true|
 |setHeaders|当响应静态文件请求时设置headers的方法|Funtion|&nbsp;|
 
-如果你想获得更多关于使用中间件的细节，你可以查阅[通过 Express 托管静态资源文件][3]。
+如果你想获得更多关于使用中间件的细节，你可以查阅[Serving static files in Express](http://expressjs.com/starter/static-files.html)。
 
 ##Application()
 `app`对象一般用来表示Express程序。通过调用Express模块导出的顶层的`express()`方法来创建它:
@@ -45,12 +45,12 @@ app.listen(3000);
 ```
 `app`对象具有以下的方法：
 
- -  路由HTTP请求；具体可以看[app.METHOD][4]和[app.param][5]这两个例子。
- -  配置中间件；具体请看[app.route][6]。
- -  渲染HTML视图；具体请看[app.render][7]。
- -  注册模板引擎；具体请看[app.engine][8]。
+ -  路由HTTP请求；具体可以看[app.METHOD](http://expressjs.com/4x/api.html#app.METHOD)和[app.param](http://expressjs.com/4x/api.html#app.param)这两个例子。
+ -  配置中间件；具体请看[app.route](http://expressjs.com/4x/api.html#app.route)。
+ -  渲染HTML视图；具体请看[app.render](http://expressjs.com/4x/api.html#app.render)。
+ -  注册模板引擎；具体请看[app.engine](http://expressjs.com/4x/api.html#app.engine)。
 
-它还有一些属性设置，这些属性可以改变程序的行为。获得更多的信息，可以查阅[Application settings][9]。
+它还有一些属性设置，这些属性可以改变程序的行为。获得更多的信息，可以查阅[Application settings](http://expressjs.com/4x/api.html#app.settings.table)。
 
 ###Properties
 ####app.locals
@@ -64,7 +64,7 @@ app.locals.email
 ```
 一旦设定，`app.locals`的各属性值将贯穿程序的整个生命周期，与其相反的是`res.locals`，它只在这次请求的生命周期中有效。
 
-在程序中，你可以在渲染模板时使用这些本地变量。它们是非常有用的，可以为模板提供一些有用的方法，以及`app`级别的数据。通过`req.app.locals`(具体查看[req.app][10])，Locals可以在中间件中使用。
+在程序中，你可以在渲染模板时使用这些本地变量。它们是非常有用的，可以为模板提供一些有用的方法，以及`app`级别的数据。通过`req.app.locals`(具体查看[req.app](http://expressjs.com/4x/api.html#req.app))，Locals可以在中间件中使用。
 ```js
 app.locals.title = 'My App';
 app.locals.strftime = require('strftime');
@@ -86,7 +86,7 @@ admin.get('/', function(req, res) {
 
 app.use('/admin', admin); // mount the sub app
 ```
-它和req对象的[baseUrl][11]属性比较相似，除了`req.baseUrl`是匹配的URL路径，而不是匹配的模式。如果一个子程序被挂载在多条路径模式，`app.mountpath`就是一个关于挂载路径模式项的列表，如下面例子所示。
+它和req对象的[baseUrl](http://expressjs.com/4x/api.html#req.baseUrl)属性比较相似，除了`req.baseUrl`是匹配的URL路径，而不是匹配的模式。如果一个子程序被挂载在多条路径模式，`app.mountpath`就是一个关于挂载路径模式项的列表，如下面例子所示。
 ```
 ```js
 var admin = express();
@@ -142,7 +142,7 @@ app.all('/api/*', requireAuthentication);
 ```
 
 ####app.delete(path, callback[, callback ...])
-路由`HTTP DELETE`请求到有特殊回调方法的特殊的路径。获取更多的信息，可以查阅[routing guide][12]。
+路由`HTTP DELETE`请求到有特殊回调方法的特殊的路径。获取更多的信息，可以查阅[routing guide](http://expressjs.com/guide/routing.html)。
 你可以提供多个回调函数，它们的行为和中间件一样，除了这些回调可以通过调用`next('router')`来绕过剩余的路由回调。你可以使用这个机制来为一个路由设置一些前提条件，如果不能满足当前路由的处理条件，那么你可以传递控制到随后的路由。
 ```js
 app.delete('/', function(req, res) {
@@ -151,7 +151,7 @@ app.delete('/', function(req, res) {
 ```
 
 ####app.disable(name)
-设置类型为布尔的设置名为`name`的值为`false`，此处的`name`是[app settings table][13]中各属性的一个。调用`app.set('foo', false)`和调用`app.disable('foo')`是等价的。
+设置类型为布尔的设置名为`name`的值为`false`，此处的`name`是[app settings table](http://expressjs.com/4x/api.html#app.settings.table)中各属性的一个。调用`app.set('foo', false)`和调用`app.disable('foo')`是等价的。
 比如:
 ```js
 app.disable('trust proxy');
@@ -159,7 +159,7 @@ app.get('trust proxy');
 // => false
 ```
 ####app.disabled(name)
-返回`true`如果布尔类型的设置值`name`被禁用为`false`，此处的`name`是[app settings table][14]中各属性的一个。
+返回`true`如果布尔类型的设置值`name`被禁用为`false`，此处的`name`是[app settings table](http://expressjs.com/4x/api.html#app.settings.table)中各属性的一个。
 ```js
     app.disabled('trust proxy');
     // => true
@@ -169,14 +169,14 @@ app.get('trust proxy');
 ```
 
 ####app.enable(name)
-设置布尔类型的设置值`name`为`true`，此处的`name`是[app settings table][15]中各属性的一个。调用`app.set('foo', true)`和调用`app.enable('foo')`是等价的。
+设置布尔类型的设置值`name`为`true`，此处的`name`是[app settings table](http://expressjs.com/4x/api.html#app.settings.table)中各属性的一个。调用`app.set('foo', true)`和调用`app.enable('foo')`是等价的。
 ```js
     app.enable('trust proxy');
     app.get('trust proxy');
     // => true
 ```
 ####app.enabled(name)
-返回`true`如果布尔类型的设置值`name`被启动为`true`，此处的`name`是[app settings table][16]中各属性的一个。
+返回`true`如果布尔类型的设置值`name`被启动为`true`，此处的`name`是[app settings table](http://expressjs.com/4x/api.html#app.settings.table)中各属性的一个。
 ```js
     app.enabled('trust proxy');
     // => false
@@ -197,14 +197,14 @@ app.get('trust proxy');
     app.engine('html', require('ejs').renderFile);
 ```
 在这个例子中，EJS提供了一个`.renderFile`方法，这个方法满足了Express规定的签名规则：`(path, options, callback)`，然而记住在内部它只是`ejs.__express`的一个别名，所以你可以在不做任何事的情况下直接使用`.ejs`扩展。
-一些模板引擎没有遵循这种规范，[consolidate.js][17]库映射模板引擎以下面的使用方式，所以他们可以无缝的和Express工作。
+一些模板引擎没有遵循这种规范，[consolidate.js](https://github.com/tj/consolidate.js)库映射模板引擎以下面的使用方式，所以他们可以无缝的和Express工作。
 ```js
 var engines = require('consolidate');
 app.engine('haml', engines.haml);
 app.engine('html', engines.hogan);
 ```
 ####app.get(name)
-获得设置名为`name`的app设置的值，此处的`name`是[app settings table][18]中各属性的一个。
+获得设置名为`name`的app设置的值，此处的`name`是[app settings table](http://expressjs.com/4x/api.html#app.settings.table)中各属性的一个。
 如下：
 ```js
 app.get('title');
@@ -216,7 +216,7 @@ app.get('title');
 ```
 
 ####app.get(path, callback [, callback ...])
-路由`HTTP GET`请求到有特殊回调的特殊路径。获取更多的信息，可以查阅[routing guide][19]。
+路由`HTTP GET`请求到有特殊回调的特殊路径。获取更多的信息，可以查阅[routing guide](http://expressjs.com/guide/routing.html)。
 你可以提供多个回调函数，它们的行为和中间件一样，除了这些回调可以通过调用`next('router')`来绕过剩余的路由回调。你可以使用这个机制来为一个路由设置一些前提条件，如果请求没能满足当前路由的处理条件，那么传递控制到随后的路由。
 ```js
     app.get('/', function(req, res) {
@@ -225,7 +225,7 @@ app.get('title');
 ```
 
 ####app.listen(port, [hostname], [backlog], [callback])
-绑定程序监听端口到指定的主机和端口号。这个方法和`Node`中的[http.Server.listen()][20]是一样的。
+绑定程序监听端口到指定的主机和端口号。这个方法和`Node`中的[http.Server.listen()](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback)是一样的。
 ```js
     var express = require('express');
     var app = express();
@@ -250,7 +250,7 @@ app.get('title');
 
 ####app.METHOD(path, callback [, callback ...])
 路由一个HTTP请求，`METHOD`是这个请求的HTTP方法，比如`GET`，`PUT`，`POST`等等，注意是小写的。所以，实际的方法是`app.get()`，`app.post()`，`app.put()`等等。下面有关于方法的完整的表。
-获取更多信息，请看[routing guide][21]。
+获取更多信息，请看[routing guide](http://expressjs.com/guide/routing.html)。
 Express支持下面的路由方法，对应与同名的HTTP方法：
 
 <table style="border:0px;background:node">
@@ -314,7 +314,7 @@ Express支持下面的路由方法，对应与同名的HTTP方法：
 ```
 
 ####app.param([name], callback)
-给路由参数添加回调触发器，这里的`name`是参数名或者参数数组，`function`是回调方法。回调方法的参数按序是请求对象，响应对象，下个中间件，参数值和参数名。
+给路由参数添加回调触发器，这里的`name`是参数名或者参数数组，`function`是回调方法。回调方法的参数按序是`请求对象`，`响应对象`，`下个中间件`，`参数值`和`参数名`。
 如果`name`是数组，会按照各个参数在数组中被声明的顺序将回调触发器注册下来。还有，对于除了最后一个参数的其他参数，在他们的回调中调用`next()`来调用下个声明参数的回调。对于最后一个参数，在回调中调用`next()`将调用位于当前处理路由中的下一个中间件，如果`name`只是一个`string`那就和它是一样的(就是说只有一个参数，那么就是最后一个参数，和数组中最后一个参数是一样的)。
 例如，当`:user`出现在路由路径中，你可以映射用户加载的逻辑处理来自动提供`req.user`给这个路由，或者对输入的参数进行验证。
 ```js
@@ -429,7 +429,7 @@ and this mathes too
     });
 ```
 >在使用正则表达式来，不要使用`.`。例如，你不能使用`/user-.+/`来捕获`user-gami`，用使用`[\\s\\S]`或者`[\\w\\>W]`来代替(正如`/user-[\\s\\S]+/`)。
->```js
+>```
 > //captures '1-a_6' but not '543-azser-sder'
 > router.get('/[0-9]+-[[\\w]]*', function); 
 
@@ -457,7 +457,7 @@ and this mathes too
 如果`app`挂载很复杂下，那么这个方法的行为也会很复杂：一种更好用的方式是使用`req.baseUrl`来获得这个app的典型路径。
 
 ####app.post(path, callback, [callback ...])
-路由`HTTP POST`请求到有特殊回调的特殊路径。获取更多的信息，可以查阅[routing guide][22]。
+路由`HTTP POST`请求到有特殊回调的特殊路径。获取更多的信息，可以查阅[routing guide](http://expressjs.com/guide/routing.html)。
 你可以提供多个回调函数，它们的行为和中间件一样，除了这些回调可以通过调用`next('router')`来绕过剩余的路由回调。你可以使用这个机制来为一个路由设置一些前提条件，如果请求没能满足当前路由的处理条件，那么传递控制到随后的路由。
 ```js
     app.post('/', function(req, res) {
@@ -466,7 +466,7 @@ and this mathes too
 ```
 
 ####app.put(path, callback, [callback ...])
-路由`HTTP PUT`请求到有特殊回调的特殊路径。获取更多的信息，可以查阅[routing guide][23]。
+路由`HTTP PUT`请求到有特殊回调的特殊路径。获取更多的信息，可以查阅[routing guide](http://expressjs.com/guide/routing.html)。
 你可以提供多个回调函数，它们的行为和中间件一样，除了这些回调可以通过调用`next('router')`来绕过剩余的路由回调。你可以使用这个机制来为一个路由设置一些前提条件，如果请求没能满足当前路由的处理条件，那么传递控制到随后的路由。
 ```js
     app.put('/', function(req, res) {
@@ -475,7 +475,7 @@ and this mathes too
 ```
 
 ####app.render(view, [locals], callback)
-通过`callback`回调返回一个`view`渲染之后得到的HTML文本。它可以接受一个可选的参数，可选参数包含了这个`view`需要用到的本地数据。这个方法类似于`res.render()`，除了它不能把渲染得到的HTML文本发送给客户端。
+通过`callback`回调返回一个`view`渲染之后得到的HTML文本。它可以接受一个可选的参数，可选参数包含了这个`view`需要用到的本地数据。这个方法类似于`res.render()`，**除了它不能把渲染得到的HTML文本发送给客户端**。
 >将`app.render()`当作是可以生成渲染视图字符串的工具方法。在`res.render()`内部，就是使用的`app.render()`来渲染视图。
 
 >如果使能了视图缓存，那么本地变量缓存就会保留。如果你想在开发的过程中缓存视图，设置它为`true`。在生产环境中，视图缓存默认是打开的。
@@ -491,7 +491,7 @@ and this mathes too
 ```
 
 ####app.route(path)
-返回一个单例模式的路由的实例，之后你可以在其上施加各种HTTP动作的中间件。使用`app.route()`来避免重复路由名字(因此错字错误)--说的意思应该是使用`app.router()`这个单例方法来避免同一个路径多个路由实例。
+返回一个单例模式的路由的实例，之后你可以在其上施加各种HTTP动作的中间件。使用`app.route()`来避免重复路由名字(例如错字错误)--说的意思应该是使用`app.router()`这个单例方法来避免同一个路径多个路由实例。
 ```js
 var app = express();
 
@@ -509,7 +509,7 @@ app.route('/events')
 
 ```
 ####app.set(name, value)
-给`name`设置项赋`value`值，`name`是[app settings table][24]中属性的一项。
+给`name`设置项赋`value`值，`name`是[app settings table](http://expressjs.com/4x/api.html#app.settings.table)中属性的一项。
 对于一个类型是布尔型的属性调用`app.set('foo', ture)`等价于调用`app.enable('foo')`。同样的，调用`app.set('foo', false)`等价于调用`app.disable('foo')`。
 可以使用`app.get()`来取得设置的值：
 ```js
@@ -518,25 +518,26 @@ app.route('/events')
 ```
 **Application Settings**
 如果`name`是程序设置之一，它将影响到程序的行为。下边列出了程序中的设置。
-|Property|Type|Value|Default|
+
+|属性|类型|值|默认|
 |:---:|:---:|:---:|:---:|
 |case sensitive routing|Boolean|启用区分大小写。|不启用。对`/Foo`和`/foo`处理是一样。|
 |env|String|环境模型。|process.env.NODE_ENV(NODE_ENV环境变量)或者"development"|
-|etag|Varied|设置`ETag`响应头。可取的值，可以查阅[etag options table][25]。更多关于[HTTP ETag header][26]。|weak|
+|etag|Varied|设置`ETag`响应头。可取的值，可以查阅[etag options table](http://expressjs.com/4x/api.html#etag.options.table)。更多关于[HTTP ETag header](http://en.wikipedia.org/wiki/HTTP_ETag)。|weak|
 |jsonp callback name|String|指定默认JSONP回调的名称。|?callback=|
 |json replacer|String|JSON替代品回调|null|
 |json spaces|Number|当设置了这个值后，发送缩进空格美化过的JSON字符串。|Disabled|
-|query parser|Varied|设置值为`false`来禁用`query parser`，或者设置`simple`,`extended`，也可以自己实现`query string`解析函数。`simple`基于`Node`原生的`query`解析，[querystring][27]。|"extend"|
+|query parser|Varied|设置值为`false`来禁用`query parser`，或者设置`simple`,`extended`，也可以自己实现`query string`解析函数。`simple`基于`Node`原生的`query`解析，[querystring](http://nodejs.org/api/querystring.html)。|"extend"|
 |strict routing|Boolean|启用严格的路由。|不启用。对`/foo`和`/foo/`的路由处理是一样。|
 |subdomain offset|Number|用来删除访问子域的主机点分部分的个数|2|
-|trust proxy|Varied|指示`app`在一个反向代理的后面，使用`x-Forwarded-*`来确定连接和客户端的IP地址。注意:`X-Forwarded-*`头部很容易被欺骗，所有检测客户端的IP地址是靠不住的。`trust proxy`默认不启用。当启用时，Express尝试通过前端代理或者一系列代理来获取已连接的客户端IP地址。`req.ips`属性包含了已连接客户端IP地址的一个数组。为了启动它，需要设置在下面[trust proxy options table][28]中定义的值。`trust proxy`的设置实现使用了`proxy-addr`包。如果想获得更多的信息，可以查阅它的文档|Disable|
+|trust proxy|Varied|指示`app`在一个反向代理的后面，使用`x-Forwarded-*`来确定连接和客户端的IP地址。注意:`X-Forwarded-*`头部很容易被欺骗，所有检测客户端的IP地址是靠不住的。`trust proxy`默认不启用。当启用时，Express尝试通过前端代理或者一系列代理来获取已连接的客户端IP地址。`req.ips`属性包含了已连接客户端IP地址的一个数组。为了启动它，需要设置在下面[trust proxy options table](http://expressjs.com/4x/api.html#trust.proxy.options.table)中定义的值。`trust proxy`的设置实现使用了`proxy-addr`包。如果想获得更多的信息，可以查阅它的文档|Disable|
 |views|String or Array|`view`所在的目录或者目录数组。如果是一个数组，将按在数组中的顺序来查找`view`。|process.cwd() + '/views'|
 |view cache|Boolean|启用视图模板编译缓存。|在生成环境默认开启。|
 |view engine|String|省略时，默认的引擎被扩展使用。||
 |x-powered-by|Boolean|启用`X-Powered-By:Express`HTTP头部|true|
 
 **Options for `trust proxy` settings**
-查阅[Express behind proxies][29]来获取更多信息。
+查阅[Express behind proxies](http://expressjs.com/guide/behind-proxies.html)来获取更多信息。
 
 <table>
 <thead><tr><th>Type</th><th>Value</th></tr></thead>
@@ -584,7 +585,7 @@ app.route('/events')
 </table>
 
 **Options for `etag` settings**
-`ETag`功能的实现使用了[etag][30]包。如果你需要获得更多的信息，你可以查阅它的文档。
+`ETag`功能的实现使用了[etag](https://www.npmjs.org/package/etag)包。如果你需要获得更多的信息，你可以查阅它的文档。
 
 <table>
 <thead><tr><th>Type</th><th>Value</th></tr></thead>
@@ -614,11 +615,11 @@ app.route('/events')
 </table>
 
 ####app.use([path,], function [, function...])
-挂载[中间件][31]方法到路径上。如果路径未指定，那么默认为"/"。
+挂载[中间件](http://expressjs.com/guide/using-middleware.html)方法到路径上。如果路径未指定，那么默认为"/"。
 >一个路由将匹配任何路径如果这个路径以这个路由设置路径后紧跟着"/"。比如：`app.use('/appale', ...)`将匹配"/apple"，"/apple/images"，"/apple/images/news"等。
 
 >中间件中的`req.originalUrl`是`req.baseUrl`和`req.path`的组合，如下面的例子所示。
->```js
+>```
 >app.use('/admin', function(req, res, next) {
 >// GET 'http://www.example.com/admin/new'
 >console.log(req.originalUrl); // '/admin/new'
@@ -878,7 +879,7 @@ module.exports = function(req, res) {
 app.use(['/gre+t', 'hel{2}o'], greet); // load the on router on '/gre+t' and '/hel{2}o'
 ```
 当一个请求路径是`/greet/jp`，`baseUrl`是`/greet`，当一个请求路径是`/hello/jp`，`req.baseUrl`是`/hello`。
-`req.baseUrl`和`app`对象的[mountpath][32]属性相似，除了`app.mountpath`返回的是路径匹配模式。
+`req.baseUrl`和`app`对象的[mountpath](http://expressjs.com/4x/api.html#app.mountpath)属性相似，除了`app.mountpath`返回的是路径匹配模式。
 
 ####req.body
 在请求的body中保存的是提交的一对对键值数据。默认情况下，它是`undefined`，当你使用比如`body-parser`和`multer`这类解析`body`数据的中间件时，它是填充的。
@@ -904,14 +905,16 @@ app.use(['/gre+t', 'hel{2}o'], greet); // load the on router on '/gre+t' and '/h
     req.cookies.name
     // => "tj"
 ```
-获取更多信息，问题，或者关注，可以查阅[cookie-parser][33]。
+获取更多信息，问题，或者关注，可以查阅[cookie-parser](https://github.com/expressjs/cookie-parser)。
 ####req.fresh
 指示这个请求是否是新鲜的。其和`req.stale`是相反的。
 当`cache-control`请求头没有`no-cache`指示和下面中的任一一个条件为`true`，那么其就为`true`：
 
  - `if-modified-since`请求头被指定，和`last-modified`请求头等于或者早于`modified`响应头。
  - `if-none-match`请求头是`*`。
- - `if-none-match`请求头在被解析进它的指令之后，不匹配`etag`响应头(完全不知道什么鬼)。
+ - `if-none-match`请求头在被解析进它的指令之后，和`etag`响应头的值不相等
+
+>ps:If-None-Match作用: If-None-Match和ETag一起工作，工作原理是在HTTP Response中添加ETag信息。 当用户再次请求该资源时，将在HTTP Request 中加入If-None-Match信息(ETag的值)。如果服务器验证资源的ETag没有改变（该资源没有更新），将返回一个304状态告诉客户端使用本地缓存文件。否则将返回200状态和新的资源和Etag.  使用这样的机制将提高网站的性能
 
 ```js
     req.fresh
@@ -921,7 +924,7 @@ app.use(['/gre+t', 'hel{2}o'], greet); // load the on router on '/gre+t' and '/h
 ####req.hostname
 包含了源自`Host`HTTP头部的`hostname`。
 当`trust proxy`设置项被设置为启用值，`X-Forwarded-Host`头部被使用来代替`Host`。这个头部可以被客户端或者代理设置。
-```js
+```
 // Host: "example.com"
 req.hostname
 // => "example.com"
@@ -930,7 +933,7 @@ req.hostname
 当`trust proxy`设置项被设置为启用值，这个属性包含了一组在`X-Forwarded-For`请求头中指定的IP地址。不然，其就包含一个空的数组。这个头部可以被客户端或者代理设置。
 例如，如果`X-Forwarded-For`是`client`，`proxy1`，`proxy2`，`req.ips`就是`["clinet", "proxy1", "proxy2"]`，这里`proxy2`就是最远的下游。
 ####req.originalUrl
->`req.url`不是一个原生的`Express`属性，它继承自[Node's http module][34]。
+>`req.url`不是一个原生的`Express`属性，它继承自[Node's http module](https://nodejs.org/api/http.html#http_message_url)。
 
 这个属性很像`req.url`；然而，其保留了原版的请求链接，允许你自由地重定向`req.url`到内部路由。比如，`app.use()`的`mounting`特点可以重定向`req.url`跳转到挂载点。
 ```js
@@ -960,12 +963,12 @@ req.path
 // => "/users"
 ```
 
-> 当在一个中间件中被调用，挂载点不包含在`req.path`中。你可以查阅[app.use()][35]获得跟多的信息。
+> 当在一个中间件中被调用，挂载点不包含在`req.path`中。你可以查阅[app.use()](http://expressjs.com/4x/api.html#app.use)获得跟多的信息。
 
 ####req.protocol
 请求的协议，一般为`http`，当启用TLS加密，则为`https`。
 当`trust proxy`设置一个启用的参数，如果存在`X-Forwarded-Proto`头部的话，其将被信赖和使用。这个头部可以被客户端或者代理设置。
-```js
+```
 req.ptotocol
 // => "http"
 ```
@@ -1015,29 +1018,31 @@ app.get('/user/:id?', function userIdHandler(req, res) {
 ```
 ####req.secure
 一个布尔值，如果建立的是TLS的连接，那么就为`true`。等价与：
-```js
+```
     'https' == req.protocol;
 ```
 
 ####req.signedCookies
-当使用`cookie-parser`中间件的时候，这个属性包含的是请求发过来的签名`cookies`，不签名的并且为使用做好了准备(这句真不知道怎么翻译了...)。签名`cookies`驻留在不同的对象中来体现开发者的意图；不然，一个恶意攻击可以被施加在`req.cookie`值上(它是很容易被欺骗的)。记住，签名一个`cookie`不是把它藏起来或者加密；而是简单的防止篡改(因为签名使用的加密是私人的)。如果没有发送签名的`cookie`，那么这个属性默认为`{}`。
-```js
+当使用`cookie-parser`中间件的时候，这个属性包含的是请求发过来的签名`cookies`，这个属性取得的是不含签名，可以直接使用的值。签名的`cookies`保存在不同的对象中来体现开发者的意图；不然，一个恶意攻击可以被施加在`req.cookie`值上(它是很容易被欺骗的)。记住，签名一个`cookie`不是把它藏起来或者加密；而是简单的防止篡改(因为签名使用的加密是私人的)。如果没有发送签名的`cookie`，那么这个属性默认为`{}`。
+
+
+```
 // Cookie： user=tobi.CP7AWaXDfAKIRfH49dQzKJx7sKzzSoPq7/AcBBRVwlI3
 req.signedCookies.user
 // => "tobi"
 ```
-为了获取更多的信息，问题或者关注，可以参阅[cookie-parser][36]。
+为了获取更多的信息，问题或者关注，可以参阅[cookie-parser](https://github.com/expressjs/cookie-parser)。
 
 ####req.stale
-指示这个请求是否是`stale`(陈旧的)，它与`req.fresh`是相反的。更多信息，可以查看[req.fresh][37]。
-```js
+指示这个请求是否是`stale`(陈旧的)，它与`req.fresh`是相反的。更多信息，可以查看[req.fresh](http://expressjs.com/4x/api.html#req.fresh)。
+```
 req.stale
 // => true
 ```
 
 ####req.subdomains
 请求中域名的子域名数组。
-```js
+```
 // Host: "tobi.ferrets.example.com"
 req.subdomains
 // => ["ferrets", "tobi"]
@@ -1045,7 +1050,7 @@ req.subdomains
 
 ####req.xhr
 一个布尔值，如果`X-Requested-With`的值为`XMLHttpRequest`，那么其为`true`，其指示这个请求是被一个客服端库发送，比如`jQuery`。
-```js
+```
 req.xhr
 // => true
 
@@ -1083,19 +1088,19 @@ req.accepts(['html', 'json']);
 // => "json"
 
 ```
-获取更多信息，或者如果你有问题或关注，可以参阅[accepts][38]。
+获取更多信息，或者如果你有问题或关注，可以参阅[accepts](https://github.com/expressjs/accepts)。
 
 ####req.acceptsCharsets(charset[, ...])
 返回指定的字符集集合中第一个的配置的字符集，基于请求的`Accept-Charset`HTTP头。如果指定的字符集没有匹配的，那么就返回false。
-获取更多信息，或者如果你有问题或关注，可以参阅[accepts][39]。
+获取更多信息，或者如果你有问题或关注，可以参阅[accepts](https://github.com/expressjs/accepts)。
 
 ####req.acceptsEncodings(encoding[, ...])
 返回指定的编码集合中第一个的配置的编码，基于请求的`Accept-Encoding`HTTP头。如果指定的编码集没有匹配的，那么就返回false。
-获取更多信息，或者如果你有问题或关注，可以参阅[accepts][40]。
+获取更多信息，或者如果你有问题或关注，可以参阅[accepts](https://github.com/expressjs/accepts)。
 
 ####req.acceptsLanguages(lang [, ...])
 返回指定的语言集合中第一个的配置的语言，基于请求的`Accept-Language`HTTP头。如果指定的语言集没有匹配的，那么就返回false。
-获取更多信息，或者如果你有问题或关注，可以参阅[accepts][41]。
+获取更多信息，或者如果你有问题或关注，可以参阅[accepts](https://github.com/expressjs/accepts)。
 
 ####req.get(field)
 返回指定的请求HTTP头部的域内容(不区分大小写)。`Referrer`和`Referer`的域内容可互换。
@@ -1129,13 +1134,13 @@ req.is('application/*');
 req.is('html');
 // => false
 ```
-获取更多信息，或者如果你有问题或关注，可以参阅[type-is][42]。
+获取更多信息，或者如果你有问题或关注，可以参阅[type-is](https://github.com/expressjs/type-is)。
 
 ####req.param(naem, [, defaultValue])
 > 过时的。可以在适合的情况下，使用`req.params`，`req.body`或者`req.query`。
 
 返回当前参数`name`的值。
-```js
+```
 // ?name=tobi
 req.param('name')
 // => "tobi"
@@ -1155,7 +1160,7 @@ req.param('name')
 
 可选的，你可以指定一个`defaultValue`来设置一个默认值，如果这个参数在任何一个请求的对象中都不能找到。
 > 直接通过`req.params`，`req.body`，`req.query`取得应该更加的清晰-除非你确定每一个对象的输入。
-> `Body-parser`中间件必须加载，如果你使用`req.param()`。详细请看[req.body][43]。
+> `Body-parser`中间件必须加载，如果你使用`req.param()`。详细请看[req.body](http://expressjs.com/4x/api.html#req.body)。
 
 
 ##Response
@@ -1191,7 +1196,8 @@ app.get('/', function(req, res) {
 ```
 
 ####res.locals
-一个对象，其包含了响应的能够反应出请求的本地参数和因此只提供给视图渲染，在请求响应的周期内(如果有的话)--我要翻译吐了。否则，其和`app.locals`是一样的。(不知道翻译的什么...)
+一个对象，其包含了本次请求的响应中的变量和因此它的变量只提供给本次请求响应的周期内视图渲染里使用(如果有视图的话)。
+其他方面，其和`app.locals`是一样的。
 这个参数在导出请求级别的信息是很有效的，这些信息比如请求路径，已认证的用户，用户设置等等。
 ```js
 app.use(function(req, res, next) {
@@ -1215,7 +1221,7 @@ res.append('Warning', '199 Miscellaneous warning');
 
 ####res.attachment([filename])
 设置HTTP响应的`Content-Disposition`头内容为"attachment"。如果提供了`filename`，那么将通过`res.type()`获得扩展名来设置`Content-Type`，并且设置`Content-Disposition`内容为"filename="parameter。
-```js
+```
 res.attachment();
 // Content-Disposition: attachment
 
@@ -1227,6 +1233,7 @@ res.attachment('path/to/logo.png');
 ####res.cookie(name, value [,options])
 设置`name`和`value`的`cookie`，`value`参数可以是一串字符或者是转化为json字符串的对象。
 options是一个对象，其可以有下列的属性。
+
 |属性|类型|描述|
 |:---:|:---:|:---:|
 |domain|String|设置cookie的域名。默认是你本app的域名。|
@@ -1254,7 +1261,7 @@ res.cookie('cart', {'items':[1, 2, 3]});
 res.cookie('cart', {'items':[1, 2, 3]}, {'maxAge':90000});
 ```
 当我们使用`cookie-parser`中间件的时候，这个方法也支持签名的cookie。简单地，在设置`options`时包含`signed`选项为`true`。然后`res.cookie()`将使用传递给`cookieParser(secret)`的密钥来签名这个值。
-```js
+```
 res.cookie('name', 'tobi', {'signed':true});
 ```
 
@@ -1284,20 +1291,20 @@ if (err) {
 ```
 
 ####res.end([data] [, encoding])
-结束本响应的过程。这个方法实际上来自`Node`核心模块，具体的是[response.end() method of http.ServerResponse][44]。
-用来快速结束请求，没有任何的数据。如果你需要发送数据，可以使用[res.send()][45]和[res.json()][46]这类的方法。
-```js
+结束本响应的过程。这个方法实际上来自`Node`核心模块，具体的是[response.end() method of http.ServerResponse](https://nodejs.org/api/http.html#http_response_end_data_encoding_callback)。
+用来快速结束请求，没有任何的数据。如果你需要发送数据，可以使用[res.send()](http://expressjs.com/4x/api.html#res.send)和[res.json()](http://expressjs.com/4x/api.html#res.json)这类的方法。
+```
 res.end();
 res.status(404).end();
 ```
 ####res.format(object)
-进行内容协商，根据请求的对象中`Accept`HTTP头部指定的接受内容。它使用[req.accepts()][47]来选择一个句柄来为请求服务，这些句柄按质量值进行排序。如果这个头部没有指定，那么第一个方法默认被调用。当不匹配时，服务器将返回`406`"Not Acceptable"，或者调用`default`回调。
+进行内容协商，根据请求的对象中`Accept`HTTP头部指定的接受内容。它使用[req.accepts()](http://expressjs.com/4x/api.html#res.accepts)来选择一个句柄来为请求服务，这些句柄按质量值进行排序。如果这个头部没有指定，那么第一个方法默认被调用。当不匹配时，服务器将返回`406`"Not Acceptable"，或者调用`default`回调。
 `Content-Type`请求头被设置，当一个回调方法被选择。然而你可以改变他，在这个方法中使用这些方法，比如`res.set()`或者`res.type()`。
 下面的例子，将回复`{"message":"hey"}`，当请求的对象中`Accept`头部设置成"application/json"或者"*/json"(不过如果是`*/*`，然后这个回复就是"hey")。
 ```js
 res.format({
     'text/plain':function() {
-        res.send('hey')'
+        res.send('hey');
     },
     'text/html':function() {
         res.send('<p>hey</p>');
@@ -1341,7 +1348,7 @@ res.status(500).json({error:'message'});
 
 ####res.jsonp([body])
 发送一个json的响应，并且支持JSONP。这个方法和`res.json()`效果相同，除了其在选项中支持JSONP回调。
-```js
+```
 res.jsonp(null)
 // => null
 
@@ -1351,9 +1358,9 @@ res.jsonp({user:'tobi'})
 res.status(500).jsonp({error:'message'})
  // => {"error" : "message"}
 ```
-默认情况下，jsonp的回调方法简单写作`callback`。可以通过[jsonp callback name][48]设置来重写它。
+默认情况下，jsonp的回调方法简单写作`callback`。可以通过[jsonp callback name](http://expressjs.com/4x/api.html#app.settings.table)设置来重写它。
 下面是一些例子使用JSONP响应，使用相同的代码:
-```js
+```
 // ?callback=foo
 res.jsonp({user:'tobo'})
 // => foo({"user":"tobi"})
@@ -1366,14 +1373,14 @@ res.status(500).jsonp({error:'message'})
 ```
 ####res.links(links)
 连接这些`links`，`links`是以传入参数的属性形式提供，连接之后的内容用来填充响应的Link HTTP头部。
-```js
+```
 res.links({
     next:'http://api.example.com/users?page=2',
     last:'http://api.example.com/user?page=5'
 });
 ```
 效果：
-```js
+```
 Link:<http://api.example.com/users?page=2>;rel="next",
 <http://api.example.com/users?page=5>;rel="last"
 ```
@@ -1387,10 +1394,10 @@ Link:<http://api.example.com/users?page=2>;rel="next",
 ```
 当`path`参数为`back`时，其具有特殊的意义，其指定URL为请求对象的`Referer`头部指定的URL。如果请求中没有指定，那么其即为"/"。
 
->Express传递指定的URL字符串作为回复给浏览器响应中的`Location`头部的值，不检测和操作，除了当是`back`这个case时。浏览器有推导预期URL从当前的URL或者指定的URL，和在`Location`指定的URL的责任；相应地重定向它。(我也不知道翻译的什么...)
+>Express传递指定的URL字符串作为回复给浏览器响应中的`Location`头部的值，不检测和操作，除了`back`这个参数。浏览器会将用户重定向到`location`设置的url或者`Referer`的url（`back`参数的情况）
 
 ####res.redirect([status,] path)
-重定向来源于指定`path`的URL，以及指定的[HTTP status code][49]`status`。如果你没有指定`status`，status code默认为"302 Found"。
+重定向来源于指定`path`的URL，以及指定的[HTTP status code](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)`status`。如果你没有指定`status`，status code默认为"302 Found"。
 ```js
 res.redirect('/foo/bar');
 res.redirect('http://example.com');
@@ -1398,23 +1405,23 @@ res.redirect(301, 'http://example.com');
 res.redirect('../login');
 ```
 重定向也可以是完整的URL，来重定向到不同的站点。
-```js
+```
 res.redirect('http://google.com');
 ```
 重定向也可以相对于主机的根路径。比如，如果程序的路径为`http://example.com/admin/post/new`，那么下面将重定向到`http://example.com/admim`:
-```js
+```
 res.redirect('/admin');
 ```
 重定向也可以相对于当前的URL。比如，来之于`http://example.com/blog/admin/`(注意结尾的`/`)，下面将重定向到`http://example.com/blog/admin/post/new`。
-```js
+```
 res.redirect('post/new');
 ```
 如果来至于`http://example.com/blog/admin`（没有尾部`/`），重定向`post/new`，将重定向到`http://example.com/blog/post/new`。如果你觉得上面很混乱，可以把路径段认为目录(有'/')或者文件，这样是可以的。相对路径的重定向也是可以的。如果你当前的路径为`http://example.com/admin/post/new`，下面的操作将重定向到`http://example.com/admin/post`：
-```js
+```
 res.redirect('..');
 ```
-`back`将重定向请求到[referer][50]，当没有`referer`的时候，默认为`/`。
-```js
+`back`将重定向请求到[referer](http://en.wikipedia.org/wiki/HTTP_referer)，当没有`referer`的时候，默认为`/`。
+```
 res.redirect('back');
 ```
 
@@ -1426,7 +1433,7 @@ res.redirect('back');
 
 >本地变量缓存使能视图缓存。在开发环境中缓存视图，需要手动设置为true；视图缓存在生产环境中默认开启。
 
-```js
+```
 
 // send the rendered view to the client
 res.render('index');
@@ -1457,17 +1464,17 @@ res.status(500).send({ error: 'something blew up' });
 ```
 对于一般的非流请求，这个方法可以执行许多有用的的任务：比如，它自动给`Content-Length`HTTP响应头赋值(除非先前定义)，也支持自动的HEAD和HTTP缓存更新。
 当参数是一个`Buffer`对象，这个方法设置`Content-Type`响应头为`application/octet-stream`，除非事先提供，如下所示:
-```js
+```
 res.set('Content-Type', 'text/html');
 res.send(new Buffer('<p>some html</p>'));
 ```
 当参数是一个字符串，这个方法设置`Content-Type`响应头为`text/html`：
-```js
+```
 res.send('<p>some html</p>');
 ```
 
 当参数是一个对象或者数组，Express使用JSON格式来表示：
-```js
+```
 res.send({user:'tobi'});
 res.send([1, 2, 3]);
 ```
@@ -1477,14 +1484,14 @@ res.send([1, 2, 3]);
 
 传输`path`指定的文件。根据文件的扩展名设置`Content-Type`HTTP头部。除非在`options`中有关于`root`的设置，`path`一定是关于文件的绝对路径。
 下面的表提供了`options`参数的细节:
+
 |属性|描述|默认值|可用版本|
 |:---:|:---:|:---:|:---:|
-|maxAge|设置`Cache-Control`的`max-age`属性，格式为毫秒数，或者是[ms format][51]的一串字符串|0||
+|maxAge|设置`Cache-Control`的`max-age`属性，格式为毫秒数，或者是[ms format](https://www.npmjs.org/package/ms)的一串字符串|0||
 |root|相对文件名的根目录|||
 |lastModified|设置`Last-Modified`头部为此文件在系统中的最后一次修改时间。设置`false`来禁用它|Enable|4.9.0+|
-|headers|一个对象，包含了文件所在的sever的HTTP头部。(不知道怎么翻译了)|||
-|dotfiles|是否支持点开头文件名的选项。可选的值"allow","deny","ignore"|"ignore"||
-
+|headers|一个对象，包含了文件相关的HTTP头部。|||
+|dotfiles|是否支持点开头文件名的选项。可选的值"allow","deny","ignore"|"ignore"|&nbsp;|
 当传输完成或者发生了什么错误，这个方法调用`fn`回调方法。如果这个回调参数指定了和一个错误发生，回调方法必须明确地通过结束请求-响应循环或者传递控制到下个路由来处理响应过程。
 下面是使用了所有参数的使用`res.sendFile()`的例子：
 ```js
@@ -1533,7 +1540,7 @@ app.get('/user/:uid/photos/:file', function(req, res) {
 
 })
 ```
-获取更多信息，或者你有问题或者关注，可以查阅[send][52]。
+获取更多信息，或者你有问题或者关注，可以查阅[send](https://github.com/pillarjs/send)。
 
 ####res.sendStatus(statusCode)
 设置响应对象的`HTTP status code`为`statusCode`并且发送`statusCode`的相应的字符串形式作为响应的Body。
@@ -1544,14 +1551,14 @@ app.get('/user/:uid/photos/:file', function(req, res) {
     res.sendStatus(500); // equivalent to res.status(500).send('Internal Server Error')
 ```
 如果一个不支持的状态被指定，这个HTTP status依然被设置为`statusCode`并且用这个code的字符串作为Body。
-```js
+```
 res.sendStatus(2000); // equivalent to res.status(2000).send('2000');
 ```
-[More about HTTP Status Codes][53]
+[More about HTTP Status Codes](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
 
 ####res.set(field [, value])
 设置响应对象的HTTP头部`field`为`value`。为了一次设置多个值，那么可以传递一个对象为参数。
-```js
+```
 res.set('Content-Type', 'text/plain');
 
 res.set({
@@ -1563,15 +1570,17 @@ res.set({
 其和`res.header(field [,value])`效果一致。
 
 ####res.status(code)
-使用这个方法来设置响应对象的HTTP status。其是Node中[response.statusCode][54]的一个连贯性的别名。
-```js
+使用这个方法来设置响应对象的HTTP status。其是Node中[response.statusCode](http://nodejs.org/api/http.html#http_response_statuscode)的一个连贯性的别名。
+```
 res.status(403).end();
 res.status(400).send('Bad Request');
 res.status(404).sendFile('/absolute/path/to/404.png');
 ```
 
 ####res.type(type)
-设置`Content-Type`HTTP头部为MIME type，如果这个指定的type能够被[mime.lookup][55]确定。如果`type`包含`/`字符，那么设置`Content-Type`为`type`(我已经晕了)。
+程序将设置`Content-Type`HTTP头部的MIME type，如果这个设置的`type`能够被[mime.lookup](https://github.com/broofa/node-mime)解析成正确的`Content-Type`。如果`type`中包含了`/`字符，那么程序会直接设置`Content-Type`为`type`。
+
+
 ```js
 res.type('.html');              // => 'text/html'
 res.type('html');               // => 'text/html'
@@ -1582,8 +1591,10 @@ res.type('png');                // => image/png:
 
 
 ####res.vary(field)
-设置`Vary`响应头为`field`，如果已经不在那里。(不懂什么意思)
-```js
+在没有Vary应答头部时增加Vary应答头部。
+>ps：vary的意义在于告诉代理服务器/缓存/CDN，如何判断请求是否一样，vary中的组合就是服务器/缓存/CDN判断的依据，比如Vary中有User-Agent，那么即使相同的请求，如果用户使用IE打开了一个页面，再用Firefox打开这个页面的时候，CDN/代理会认为是不同的页面，如果Vary中没有User-Agent，那么CDN/代理会认为是相同的页面，直接给用户返回缓存的页面，而不会再去web服务器请求相应的页面。通俗的说就相当于`field`作为了一个缓存的key来判断是否命中缓存
+
+```
 res.vary('User-Agent').render('docs');
 ```
 
@@ -1594,18 +1605,19 @@ res.vary('User-Agent').render('docs');
 
 ####Router([options])
 如下，可以创建一个路由：
-```js
+```
 var router = express.Router([options]);
 ```
 `options`参数可以指定路由的行为，其有下列选择：
+
 |属性|描述|默认值|可用性|
 |:---:|:---:|:---:|:---:|
 |caseSensitive|是否区分大小写|默认不启用。对待`/Foo`和`/foo`一样。||
 |mergeParams|保存父路由的`res.params`。如果父路由参数和子路由参数冲突，子路由参数优先。|false|4.5.0+|
-|strict|使能严格路由。|默认不启用，`/foo`和`/foo/`被路由一样对待处理||
+|strict|使能严格路由。|默认不启用，`/foo`和`/foo/`被路由一样对待处理|&nbsp;|
 
 你可以将`router`当作一个程序，可以在其上添加中间件和HTTP路由方法(例如`get`，`put`，`post`等等)。
-```js
+```
 // invoked for any requests passed to this router
 router.use(function(req, res, next) {
   // .. some logic here .. like any other middleware
@@ -1620,7 +1632,7 @@ router.get('/events', function(req, res, next) {
 
 ```
 你可以在一个特别的根URL上挂载一个路由，这样你就以将你的各个路由放到不同的文件中或者甚至是mini的程序。
-```js
+```
 // only requests to /calendar/* will be sent to our "router"
 app.use('/calendar', router);
 ```
@@ -1629,23 +1641,23 @@ app.use('/calendar', router);
 ####router.all(path, [callback, ...] callback)
 这个方法和`router.METHOD()`方法一样，除了这个方法会匹配所有的HTTP动作。
 这个方法对想映射全局的逻辑处理到特殊的路径前缀或者任意匹配是十分有用的。比如，如果你放置下面所示的这个路由在其他路由的前面，那么其将要求从这个点开始的所有的路由进行验证操作和自动加载用户信息。记住，这些全局的逻辑操作，不需要结束请求响应周期：`loaduser`可以执行一个任务，然后调用`next()`来将执行流程移交到随后的路由。
-```js
+```
 router.all('*', requireAuthentication, loadUser);
 ```
 相等的形式:
-```js
+```
 router.all('*', requireAuthentication)
 router.all('*', loadUser);
 ```
 这是一个白名单全局功能的例子。这个例子很像前面的，不过其仅仅作用于以`/api`开头的路径:
-```js
+```
 router.all('/api/*', requireAuthentication);
 ```
 ####router.METHOD(path, [callback, ...] callback)
 `router.METHOD()`方法提供了路由方法在`Express`中，这里的`METHOD`是HTTP方法中的一个，比如`GET`，`PUT`，`POST`等等，但`router`中的METHOD是小写的。所以，实际的方法是`router.get()`，`router.put()`，`router.post()`等等。
 你可以提供多个回调函数，它们的行为和中间件一样，除了这些回调可以通过调用`next('router')`来绕过剩余的路由回调。你可以使用这个机制来为一个路由设置一些前提条件，如果请求没有满足当前路由的处理条件，那么传递控制到随后的路由。
 下面的片段可能说明了最简单的路由定义。Experss转换path字符串为正则表达式，用于内部匹配传入的请求。在匹配的时候，是不考虑`Query strings`，例如，"GET /"将匹配下面的路由，"GET /?name=tobi"也是一样的。
-```js
+```
 router.get('/', function(req, res) {
     res.send('Hello World');
 });
@@ -1757,7 +1769,8 @@ router.get('/user/:id', function(req, res) {
     });
 ```
 ####router.route(path)
-返回一个单例模式的路由的实例，之后你可以在其上施加各种HTTP动作的中间件。使用`app.route()`来避免重复路由名字(因此错字错误)--后面这句不知道说的什么鬼，大概的意思就是避免同一个路径有两个路由实例。
+返回一个单例模式的路由的实例，之后你可以在其上施加各种HTTP动作的中间件。使用`router.route()`来避免重复路由名字(例如错字错误)--说的意思应该是使用`router.route()`这个单例方法来避免同一个路径多个路由实例。
+
 构建在上面的`router.param()`例子之上，下面的代码展示了怎么使用`router.route()`来指定各种HTTP方法的处理句柄。
 ```js
 var router = express.Router();
@@ -1797,7 +1810,7 @@ router.route('/users/:user_id')
 
 ####router.use([path], [function, ...] function)
 给可选的`path`参数指定的路径挂载给定的中间件方法，未指定`path`参数，默认值为`/`。
-这个方法类似于`app.use()`。一个简单的例子和用例在下面描述。查阅[app.use()][56]获得更多的信息。
+这个方法类似于`app.use()`。一个简单的例子和用例在下面描述。查阅[app.use()](http://expressjs.com/en/4x/api.html#app.use)获得更多的信息。
 中间件就像一个水暖管道，请求在你定义的第一个中间件处开始，顺着中间件堆栈一路往下，如果路径匹配则处理这个请求。
 ```js
 var express = require('express');
@@ -1856,69 +1869,3 @@ app.use(express.static(__dirname + '/uploads'));
 ```
 `router.use()`方法也支持命名参数，以便你的挂载点对于其他的路由而言，可以使用命名参数来进行预加载，这样做是很有益的。
 
-
-
-
-
-
-
- 
- 
-
-
-  [1]: https://github.com/expressjs/serve-static?_ga=1.1179825.1201680737.1446005628
-  [2]: https://www.npmjs.org/package/ms
-  [3]: http://expressjs.com/starter/static-files.html
-  [4]: http://expressjs.com/4x/api.html#app.METHOD
-  [5]: http://expressjs.com/4x/api.html#app.param
-  [6]: http://expressjs.com/4x/api.html#app.route
-  [7]: http://expressjs.com/4x/api.html#app.render
-  [8]: http://expressjs.com/4x/api.html#app.engine
-  [9]: http://expressjs.com/4x/api.html#app.settings.table
-  [10]: http://expressjs.com/4x/api.html#req.app
-  [11]: http://expressjs.com/4x/api.html#req.baseUrl
-  [12]: http://expressjs.com/guide/routing.html
-  [13]: http://expressjs.com/4x/api.html#app.settings.table
-  [14]: http://expressjs.com/4x/api.html#app.settings.table
-  [15]: http://expressjs.com/4x/api.html#app.settings.table
-  [16]: http://expressjs.com/4x/api.html#app.settings.table
-  [17]: https://github.com/tj/consolidate.js?_ga=1.260760333.1201680737.1446005628
-  [18]: http://expressjs.com/4x/api.html#app.settings.table
-  [19]: http://expressjs.com/guide/routing.html
-  [20]: http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback
-  [21]: http://expressjs.com/guide/routing.html
-  [22]: http://expressjs.com/guide/routing.html
-  [23]: http://expressjs.com/guide/routing.html
-  [24]: http://expressjs.com/4x/api.html#app.settings.table
-  [25]: http://expressjs.com/4x/api.html#etag.options.table
-  [26]: http://en.wikipedia.org/wiki/HTTP_ETag
-  [27]: http://nodejs.org/api/querystring.html
-  [28]: http://expressjs.com/4x/api.html#trust.proxy.options.table
-  [29]: http://expressjs.com/guide/behind-proxies.html
-  [30]: https://www.npmjs.org/package/etag
-  [31]: http://expressjs.com/guide/using-middleware.html
-  [32]: http://expressjs.com/4x/api.html#app.mountpath
-  [33]: https://github.com/expressjs/cookie-parser?_ga=1.268562033.1201680737.1446005628
-  [34]: https://nodejs.org/api/http.html#http_message_url
-  [35]: http://expressjs.com/4x/api.html#app.use
-  [36]: https://github.com/expressjs/cookie-parser?_ga=1.25372221.1201680737.1446005628
-  [37]: http://expressjs.com/4x/api.html#req.fresh
-  [38]: https://github.com/expressjs/accepts?_ga=1.88139675.1201680737.1446005628
-  [39]: https://github.com/expressjs/accepts?_ga=1.88139675.1201680737.1446005628
-  [40]: https://github.com/expressjs/accepts?_ga=1.88139675.1201680737.1446005628
-  [41]: https://github.com/expressjs/accepts?_ga=1.88139675.1201680737.1446005628
-  [42]: https://github.com/expressjs/type-is?_ga=1.33770401.1201680737.1446005628
-  [43]: http://expressjs.com/4x/api.html#req.body
-  [44]: https://nodejs.org/api/http.html#http_response_end_data_encoding_callback
-  [45]: http://expressjs.com/4x/api.html#res.send
-  [46]: http://expressjs.com/4x/api.html#res.json
-  [47]: http://expressjs.com/4x/api.html#req.accepts
-  [48]: http://expressjs.com/4x/api.html#app.settings.table
-  [49]: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-  [50]: http://en.wikipedia.org/wiki/HTTP_referer
-  [51]: https://www.npmjs.org/package/ms
-  [52]: https://github.com/pillarjs/send?_ga=1.256986891.1201680737.1446005628
-  [53]: http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-  [54]: http://nodejs.org/api/http.html#http_response_statuscode
-  [55]: https://github.com/broofa/node-mime?_ga=1.67301009.1201680737.1446005628#mimelookuppath
-  [56]: http://expressjs.com/en/4x/api.html#app.use
